@@ -25,20 +25,23 @@ public class Timer extends Frame implements Runnable {
 
     }
 
+    private long start;
     public void paint(Graphics g) {
-        SimpleDateFormat sdf = new SimpleDateFormat("a hh시 mm분 ss초");
-        Date d = new Date();
-        g.drawString(sdf.format(d), 40, 80);
+        long current = System.nanoTime();
+        String str = String.format("시간 : %5.1f", (float) (current-start)/1_000_000/1_000 );
+        g.drawString( str, 30, 60 );
+
     }
 
 
     @Override
     public void run() {
+        start = System.nanoTime();
         while (true) {
-            repaint(); //과부화가 걸릴수 있다 계속해서 객체를 만들고 지우고 만들고 지우고
+            repaint();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
